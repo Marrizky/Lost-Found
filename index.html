@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lost and Found Kampus – Prototipe</title>
+<style>
+:root{--bg:#E9EDF1;--sf:#fff;--sf2:#F3F5F7;--tx:#17212B;--mu:#5B6B7A;--ln:#D5DCE3;--pr:#17324D;--prt:#fff;--hi:#B93C16;--hib:#FBE9E2;--te:#1B6E52;--teb:#DDF1E8;--wa:#8A5A00;--wab:#FFF1CC;--box-sizing:border-box;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1319;--sf:#18212B;--sf2:#202B37;--tx:#EAF0F5;--mu:#9AABBB;--ln:#2E3C4B;--pr:#8DB8E8;--prt:#0E1319;--hi:#FF9C7A;--hib:#3A2219;--te:#6FD3AA;--teb:#14342A;--wa:#F2C463;--wab:#38300F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1319;--sf:#18212B;--sf2:#202B37;--tx:#EAF0F5;--mu:#9AABBB;--ln:#2E3C4B;--pr:#8DB8E8;--prt:#0E1319;--hi:#FF9C7A;--hib:#3A2219;--te:#6FD3AA;--teb:#14342A;--wa:#F2C463;--wab:#38300F;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;display:flex;justify-content:center}
+#app{width:100%;max-width:420px;min-height:100vh;background:var(--sf2);display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:8px;padding:12px 14px;background:var(--sf2);position:sticky;top:0;z-index:5}
+.nav{flex:1;display:flex;background:var(--sf);border:1px solid var(--ln);border-radius:999px;padding:3px}
+.nav button{flex:1;border:0;background:none;color:var(--mu);padding:7px 2px;border-radius:999px;font:inherit;font-size:13px;cursor:pointer}
+.nav button.on{background:var(--pr);color:var(--prt);font-weight:600}
+.pf{width:38px;height:38px;border-radius:50%;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font-weight:700;cursor:pointer}
+main{padding:6px 14px 28px;flex:1}
+h1{font-size:22px;margin:10px 0 4px}h2{font-size:16px;margin:18px 0 8px}
+.mu{color:var(--mu);font-size:13px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px}
+.btn{border:1px solid var(--pr);background:var(--pr);color:var(--prt);border-radius:999px;padding:11px 18px;font:inherit;font-weight:600;cursor:pointer;width:100%}
+.btn.sec{background:var(--sf);color:var(--tx);border-color:var(--ln)}
+.btn.hi{background:var(--hi);border-color:var(--hi);color:var(--prt)}
+.row{display:flex;gap:10px}.row>*{flex:1}
+label{display:block;font-size:13px;font-weight:600;margin:12px 0 4px}
+input,select,textarea{width:100%;border:1px solid var(--ln);background:var(--sf);color:var(--tx);border-radius:10px;padding:10px;font:inherit}
+textarea{min-height:84px;resize:vertical}
+:focus-visible{outline:2px solid var(--pr);outline-offset:2px}
+.err{color:var(--hi);font-size:13px;margin-top:6px}
+.tabs{display:flex;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:3px;margin:10px 0}
+.tabs button{flex:1;border:0;background:none;padding:8px;border-radius:9px;font:inherit;color:var(--mu);cursor:pointer}
+.tabs button.on{background:var(--sf2);color:var(--tx);font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.it{background:var(--sf);border:1px solid var(--ln);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit}
+.ph{height:88px;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:30px}
+.it .b{padding:9px 10px}.it b{display:block;font-size:14px}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-bottom:4px}
+.tag.hilang{background:var(--hib);color:var(--hi)}.tag.temuan{background:var(--teb);color:var(--te)}
+.st{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--sf2);color:var(--mu);border:1px solid var(--ln)}
+.st.v{background:var(--wab);color:var(--wa);border-color:transparent}.st.s{background:var(--teb);color:var(--te);border-color:transparent}
+.list>button{display:flex;width:100%;align-items:center;gap:10px;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:11px;margin-bottom:8px;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.av{width:36px;height:36px;border-radius:50%;background:var(--sf2);border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.stat{display:flex;gap:10px}.stat .card{flex:1;text-align:center;padding:10px}.stat b{font-size:22px;display:block}
+.msgs{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.m{max-width:80%;padding:8px 11px;border-radius:14px;background:var(--sf);border:1px solid var(--ln)}
+.m.me{align-self:flex-end;background:var(--pr);color:var(--prt);border-color:var(--pr)}
+.m.sys{align-self:center;background:var(--wab);color:var(--wa);border:0;font-size:12px;max-width:92%;text-align:center}
+.send{display:flex;gap:8px;position:sticky;bottom:0;background:var(--sf2);padding:8px 0}.send button{width:auto;padding:0 18px}
+.ok{text-align:center;padding:28px 16px}.ok .ic{font-size:44px}
+.note{background:var(--wab);color:var(--wa);border-radius:10px;padding:9px 11px;font-size:13px;margin:10px 0}
+.empty{text-align:center;color:var(--mu);padding:26px 10px}
+@media (min-width:760px){#app{max-width:1100px;background:var(--bg)}.top{padding:16px 32px;background:var(--bg)}.nav{max-width:520px;margin:0 auto}.pf{position:absolute;right:32px}main{padding:8px 32px 40px;max-width:720px;width:100%;margin:0 auto}#app.barang main,#app.dash main{max-width:none}#app.dash .row,#app.dash .stat,#app.barang .tabs,#app.barang main>input,#app.barang main>select{max-width:640px}#app.barang main>select{display:block}.grid{grid-template-columns:repeat(3,1fr);gap:16px}.ph{height:120px}#app.login main{max-width:440px}h1{font-size:26px}body{font-size:16px}}
+@media (min-width:1024px){.grid{grid-template-columns:repeat(4,1fr)}}
+.demo{font-size:11px;color:var(--mu);text-align:center;padding:0 14px 14px}
+</style></head><body><div id="app"></div>
+<script>
+const S={user:null,screen:'login',tab:'temuan',id:null,form:'hilang',stack:[],q:'',cat:'Semua',err:'',foto:false,openHand:false,draft:{}};
+const CATS=['Dompet & Kartu','Elektronik','Tas & Buku','Kunci','Pakaian','Lainnya'];
+const PLACES=['Pos Satpam Gerbang Utama','Perpustakaan Pusat','Kantin Pusat'];
+const ICO={'Dompet & Kartu':'👛','Elektronik':'🎧','Tas & Buku':'🎒','Kunci':'🔑','Pakaian':'🧥','Lainnya':'📦'};
+let N=10;
+const items=[
+{id:1,type:'temuan',name:'Dompet kulit cokelat',cat:'Dompet & Kartu',loc:'Kantin Pusat',date:'16 Okt 2026',status:'Aktif',by:'Asep (Teknik Informatika)',desc:'Dompet cokelat berisi beberapa kartu. Ciri unik dirahasiakan untuk verifikasi.'},
+{id:2,type:'temuan',name:'Earphone nirkabel putih',cat:'Elektronik',loc:'Perpustakaan Pusat',date:'15 Okt 2026',status:'Aktif',by:'Budi (Sistem Informasi)',desc:'Earphone putih dengan case kecil.'},
+{id:3,type:'temuan',name:'Kunci motor + gantungan',cat:'Kunci',loc:'Parkiran Gedung B',date:'14 Okt 2026',status:'Aktif',by:'Sari (Manajemen)',desc:'Satu kunci motor dengan gantungan.'},
+{id:4,type:'hilang',name:'Jaket hoodie abu-abu',cat:'Pakaian',loc:'Ruang Kuliah B2.3',date:'17 Okt 2026',status:'Aktif',by:'Dina (Akuntansi)',desc:'Hoodie abu-abu ukuran L, tertinggal setelah kuliah.'},
+{id:5,type:'hilang',name:'Tas ransel hitam',cat:'Tas & Buku',loc:'Lab Komputer 2',date:'16 Okt 2026',status:'Aktif',by:'Raka (Teknik Informatika)',desc:'Ransel hitam berisi buku catatan.'},
+{id:6,type:'hilang',name:'Kartu mahasiswa (KTM)',cat:'Dompet & Kartu',loc:'Gedung Rektorat',date:'15 Okt 2026',status:'Aktif',by:'Lia (Hukum)',desc:'Satu KTM, hilang di sekitar lobi.'}];
+const chats={1:{who:'Asep',step:0,msgs:[{me:0,t:'Halo, barang ini milikmu?'}]},2:{who:'Budi',step:0,msgs:[]}};
+const $=s=>document.querySelector(s);
+const it=i=>items.find(x=>x.id===i);
+function go(s,o={}){if(!o.noPush)S.stack.push({screen:S.screen,id:S.id,tab:S.tab});Object.assign(S,{screen:s,err:''},o.set||{});render();scrollTo(0,0)}
+function back(def){const p=S.stack.pop();if(p){Object.assign(S,p)}else S.screen=def||'dash';S.err='';render()}
+function nav(s,set){S.stack=[];S.screen=s;Object.assign(S,set||{});S.err='';render()}
+function stTag(x){const c=x==='Selesai'?'s':x==='Dalam Verifikasi'?'v':'';return `<span class="st ${c}">${x}</span>`}
+function card(x){return `<button class="it" onclick="go('detail',{set:{id:${x.id}}})"><div class="ph">${ICO[x.cat]}</div><div class="b"><span class="tag ${x.type}">${x.type==='hilang'?'Hilang':'Temuan'}</span><b>${x.name}</b><span class="mu">${x.loc} · ${x.date}</span><br>${stTag(x.status)}</div></button>`}
+function hdr(){const a=S.screen;const on=k=>({dash:a==='dash',barang:['barang','detail'].includes(a),lapor:['lapor','form','ok'].includes(a),chat:['chat','room'].includes(a)})[k]?'on':'';
+return `<div class="top"><div class="nav" role="navigation"><button class="${on('dash')}" onclick="nav('dash')">Beranda</button><button class="${on('barang')}" onclick="nav('barang')">Barang</button><button class="${on('lapor')}" onclick="nav('lapor')">Lapor</button><button class="${on('chat')}" onclick="nav('chat')">Chat</button></div><button class="pf" aria-label="Profil" onclick="go('profil')">${S.user.nama[0].toUpperCase()}</button></div>`}
+const V={
+login(){return `<main style="display:flex;flex-direction:column;justify-content:center;min-height:90vh"><h1>Lost and Found Kampus</h1><p class="mu">Laporkan, cari, dan kembalikan barang di lingkungan kampus.</p><div class="card"><label for="n">Nama</label><input id="n" autocomplete="off"><label for="m">NIM</label><input id="m" inputmode="numeric"><label for="j">Jurusan</label><input id="j"><div class="err" id="e">${S.err}</div><button class="btn" style="margin-top:14px" onclick="login()">Login</button></div><p class="mu" style="margin-top:12px">Prototipe: data hanya simulasi, belum ada autentikasi sungguhan.</p></main>`},
+dash(){const mine=items.filter(x=>x.mine).length,act=items.filter(x=>x.status!=='Selesai');
+return hdr()+`<main><h1>Halo, ${S.user.nama.split(' ')[0]}</h1><p class="mu">Apa yang ingin kamu lakukan hari ini?</p><div class="row" style="margin:12px 0"><button class="btn hi" onclick="go('form',{set:{form:'hilang',foto:false,draft:{}}})">Saya kehilangan</button><button class="btn" style="background:var(--te);border-color:var(--te);color:var(--prt)" onclick="go('form',{set:{form:'temuan',foto:false,draft:{}}})">Saya menemukan</button></div>
+<div class="stat"><div class="card"><b>${act.filter(x=>x.type==='hilang').length}</b><span class="mu">Barang hilang aktif</span></div><div class="card"><b>${act.filter(x=>x.type==='temuan').length}</b><span class="mu">Barang temuan aktif</span></div></div>
+<h2>Laporan terbaru</h2><div class="grid">${items.slice().reverse().filter(x=>x.status!=='Selesai').slice(0,4).map(card).join('')}</div>
+<button class="btn sec" style="margin-top:14px" onclick="go('saya')">Laporan saya (${mine})</button></main>`},
+barang(){const l=items.filter(x=>x.type===S.tab);return hdr()+`<main><h1>Daftar barang</h1><div class="tabs"><button class="${S.tab==='temuan'?'on':''}" onclick="S.tab='temuan';render()">Barang temuan</button><button class="${S.tab==='hilang'?'on':''}" onclick="S.tab='hilang';render()">Barang hilang</button></div>
+<input placeholder="Cari nama barang atau lokasi" value="${S.q}" oninput="S.q=this.value;list()" aria-label="Cari"><select style="margin:8px 0 12px" onchange="S.cat=this.value;list()" aria-label="Kategori">${['Semua',...CATS].map(c=>`<option ${c===S.cat?'selected':''}>${c}</option>`).join('')}</select><div id="list"></div></main>`},
+detail(){const x=it(S.id),own=x.mine,c=chats[x.id];const t=x.type==='temuan';
+return hdr()+`<main><div class="card"><div class="ph" style="height:150px;border-radius:10px;font-size:56px">${ICO[x.cat]}</div><div style="margin-top:10px"><span class="tag ${x.type}">${t?'Barang temuan':'Barang hilang'}</span> ${stTag(x.status)}</div><h1>${x.name}</h1><p class="mu" style="margin:0">Kategori: ${x.cat}<br>${t?'Ditemukan':'Terakhir terlihat'} di ${x.loc}<br>Tanggal: ${x.date}<br>Pelapor: ${own?S.user.nama+' (kamu)':x.by}</p><p>${x.desc}</p>${t?'<div class="note">Ciri unik barang tidak ditampilkan. Pemilik akan diminta menyebutkannya lewat chat.</div>':''}</div>
+<div class="row" style="margin-top:12px"><button class="btn sec" onclick="back('barang')">Kembali</button>${own?`<button class="btn sec" onclick="go('saya')">Laporan saya</button>`:x.status==='Selesai'?'':`<button class="btn" onclick="contact(${x.id})">Hubungi</button>`}</div></main>`},
+chat(){const ks=Object.keys(chats);return hdr()+`<main><h1>Chat</h1>${ks.length?`<div class="list">${ks.map(k=>{const c=chats[k],x=it(+k),l=c.msgs.filter(m=>!m.sys).slice(-1)[0];return `<button onclick="go('room',{set:{id:${k}}})"><span class="av">${c.who[0]}</span><span><b>${c.who}</b><br><span class="mu">${x.name}${l?' · '+l.t.slice(0,28):''}</span></span></button>`}).join('')}</div>`:'<div class="empty">Belum ada percakapan. Buka detail barang lalu tekan Hubungi.</div>'}</main>`},
+room(){const x=it(S.id),c=chats[S.id],own=x.mine;
+const hand=c.step===0?(S.openHand?`<div class="card" style="margin-top:8px"><b>Sepakati serah terima</b><label for="pl">Lokasi di kampus</label><select id="pl">${PLACES.map(p=>`<option>${p}</option>`).join('')}</select><label for="tm">Waktu</label><input id="tm" type="datetime-local"><div class="err">${S.err}</div><div class="row" style="margin-top:10px"><button class="btn sec" onclick="S.openHand=false;render()">Batal</button><button class="btn" onclick="agree()">Simpan kesepakatan</button></div></div>`:`<button class="btn sec" style="margin-top:8px" onclick="S.openHand=true;render()">Sepakati serah terima</button>`):c.step===1?`<div class="card" style="margin-top:8px"><b>Serah terima disepakati</b><p class="mu" style="margin:4px 0 10px">${c.place}, ${c.time}</p><button class="btn" onclick="done()">Barang sudah diterima</button></div>`:`<div class="note" style="background:var(--teb);color:var(--te)">Selesai. Barang sudah diserahkan dan laporan ditutup.</div>`;
+return `<div class="top"><button class="pf" aria-label="Kembali" onclick="back('chat')">‹</button><b style="flex:1;text-align:center">${c.who}</b><button class="pf" aria-label="Profil" onclick="go('profil')">${S.user.nama[0].toUpperCase()}</button></div><main style="padding-top:0"><button class="card" style="width:100%;display:flex;gap:10px;align-items:center;text-align:left;font:inherit;color:inherit;cursor:pointer" onclick="go('detail',{set:{id:${x.id}}})"><span style="font-size:26px">${ICO[x.cat]}</span><span><span class="tag ${x.type}">${x.type==='hilang'?'Hilang':'Temuan'}</span> ${stTag(x.status)}<br><b>${x.name}</b></span></button>
+${c.step===0&&!c.msgs.length?'<p class="mu" style="text-align:center">Mulai dengan menyebutkan ciri barang yang hanya diketahui pemiliknya.</p>':''}<div class="msgs">${c.msgs.map(m=>`<div class="m ${m.sys?'sys':m.me?'me':''}">${m.t}</div>`).join('')}</div>${hand}
+${c.step<2?`<div class="send"><input id="msg" placeholder="Tulis pesan" aria-label="Pesan" onkeydown="if(event.key==='Enter')send()"><button class="btn" onclick="send()">Kirim</button></div>`:''}</main>`},
+lapor(){return hdr()+`<main><h1>Buat laporan</h1><p class="mu">Pilih jenis laporan yang ingin kamu buat.</p><div class="card" style="margin-bottom:10px"><b>Saya kehilangan barang</b><p class="mu">Agar orang yang menemukannya bisa menghubungimu.</p><button class="btn hi" onclick="go('form',{set:{form:'hilang',foto:false,draft:{}}})">Lapor kehilangan</button></div><div class="card"><b>Saya menemukan barang</b><p class="mu">Simpan barang sementara sampai pemiliknya terverifikasi.</p><button class="btn" style="background:var(--te);border-color:var(--te);color:var(--prt)" onclick="go('form',{set:{form:'temuan',foto:false,draft:{}}})">Lapor penemuan</button></div></main>`},
+form(){const t=S.form==='temuan',d=S.draft;return hdr()+`<main><h1>${t?'Laporan penemuan barang':'Laporan kehilangan barang'}</h1><p class="mu">Pelapor: ${S.user.nama} · ${S.user.nim} · ${S.user.jur}</p><div class="card"><label for="f1">Nama barang</label><input id="f1" value="${d.name||''}"><label for="f2">Kategori</label><select id="f2">${CATS.map(c=>`<option ${d.cat===c?'selected':''}>${c}</option>`).join('')}</select><label for="f3">${t?'Lokasi barang ditemukan':'Lokasi terakhir barang terlihat'}</label><input id="f3" value="${d.loc||''}"><label for="f4">${t?'Tanggal penemuan':'Tanggal kehilangan'}</label><input id="f4" type="date" value="${d.date||'2026-10-18'}"><label for="f5">Deskripsi ciri barang</label><textarea id="f5">${d.desc||''}</textarea>${t?'<div class="note">Jangan tulis ciri unik barang. Simpan untuk verifikasi pemilik lewat chat.</div>':''}<button class="btn sec" style="margin-top:12px" onclick="saveDraft();S.foto=!S.foto;render()">${S.foto?'✓ foto_barang.jpg (simulasi) · hapus':'Tambah foto (opsional)'}</button><div class="err">${S.err}</div><div class="row" style="margin-top:14px"><button class="btn sec" onclick="back('lapor')">Kembali</button><button class="btn" onclick="submit()">Kirim laporan</button></div></div></main>`},
+ok(){const t=S.form==='temuan';return hdr()+`<main><div class="card ok"><div class="ic">✅</div><h1>Terima kasih sudah melapor</h1><p class="mu">Laporanmu sudah tampil di daftar ${t?'barang temuan':'barang hilang'}. Kamu akan diberi tahu lewat Chat jika ada yang menghubungi.</p><button class="btn" onclick="nav('barang',{tab:'${S.form}'})">Lihat daftar ${t?'barang temuan':'barang hilang'}</button><button class="btn sec" style="margin-top:8px" onclick="nav('dash')">Kembali ke beranda</button></div></main>`},
+saya(){const l=items.filter(x=>x.mine);return hdr()+`<main><h1>Laporan saya</h1>${l.length?`<div class="list">${l.map(x=>`<button onclick="go('detail',{set:{id:${x.id}}})"><span style="font-size:24px">${ICO[x.cat]}</span><span style="flex:1"><span class="tag ${x.type}">${x.type==='hilang'?'Hilang':'Temuan'}</span><br><b>${x.name}</b><br><span class="mu">${x.date}</span></span>${stTag(x.status)}</button>`).join('')}</div>`:'<div class="empty">Kamu belum membuat laporan.<br><br><button class="btn" onclick="nav(\'lapor\')">Buat laporan</button></div>'}<button class="btn sec" onclick="back('dash')">Kembali</button></main>`},
+profil(){const u=S.user;return `<main><h1>Profil</h1><div class="card" style="text-align:center"><div class="av" style="width:84px;height:84px;font-size:32px;margin:0 auto 10px">${u.nama[0].toUpperCase()}</div><b style="font-size:18px">${u.nama}</b><p class="mu" style="margin:2px 0 0">NIM ${u.nim}<br>${u.jur}</p></div><button class="btn sec" style="margin-top:12px" onclick="go('saya')">Laporan saya</button><div class="row" style="margin-top:10px"><button class="btn sec" onclick="logout()">Log out</button><button class="btn" onclick="back('dash')">Kembali</button></div></main>`}};
+function list(){const q=S.q.toLowerCase();const l=items.filter(x=>x.type===S.tab&&(S.cat==='Semua'||x.cat===S.cat)&&(x.name+x.loc).toLowerCase().includes(q));const e=$('#list');if(e)e.innerHTML=l.length?`<div class="grid">${l.map(card).join('')}</div>`:'<div class="empty">Tidak ada laporan yang cocok. Coba kata kunci atau kategori lain.</div>'}
+function render(){$('#app').className=S.screen;$('#app').innerHTML=V[S.screen]()+(S.screen==='login'?'':'<div class="demo">Prototipe demo · data simulasi, tanpa backend</div>');if(S.screen==='barang')list();if(S.screen==='room'){const m=$('#msg');if(m&&document.activeElement===document.body)0;scrollTo(0,document.body.scrollHeight)}}
+function login(){const n=$('#n').value.trim(),m=$('#m').value.trim(),j=$('#j').value.trim();if(!n||!m||!j){$('#e').textContent='Isi nama, NIM, dan jurusan terlebih dahulu.';return}S.user={nama:n,nim:m,jur:j};nav('dash')}
+function logout(){S.user=null;S.stack=[];S.screen='login';render()}
+function contact(id){if(!chats[id])chats[id]={who:it(id).by.split(' ')[0],step:0,msgs:[]};go('room',{set:{id}})}
+function send(){const i=$('#msg'),v=i.value.trim();if(!v)return;const c=chats[S.id],id=S.id;c.msgs.push({me:1,t:v});render();$('#msg').focus();if(c.step===0&&c.msgs.filter(m=>m.me).length<3)setTimeout(()=>{c.msgs.push({me:0,t:'Oke, ciri itu sesuai. Kita atur serah terimanya ya.'});if(S.screen==='room'&&S.id===id)render()},900)}
+function agree(){const p=$('#pl').value,t=$('#tm').value;if(!t){S.err='Pilih waktu serah terima.';render();return}const c=chats[S.id];c.step=1;c.place=p;c.time=t.replace('T',' pukul ');c.msgs.push({sys:1,t:`Serah terima disepakati: ${p}, ${c.time}`});it(S.id).status='Dalam Verifikasi';S.openHand=false;render()}
+function done(){const c=chats[S.id];c.step=2;c.msgs.push({sys:1,t:'Barang dikonfirmasi sudah diterima. Laporan selesai.'});it(S.id).status='Selesai';render()}
+function saveDraft(){S.draft={name:$('#f1').value,cat:$('#f2').value,loc:$('#f3').value,date:$('#f4').value,desc:$('#f5').value}}
+function submit(){saveDraft();const d=S.draft;if(!d.name.trim()||!d.loc.trim()){S.err='Nama barang dan lokasi wajib diisi.';render();return}items.push({id:N++,type:S.form,name:d.name,cat:d.cat,loc:d.loc,date:d.date,status:'Aktif',by:S.user.nama,mine:true,desc:d.desc||'Tidak ada deskripsi.'});S.draft={};S.stack=[];S.screen='ok';render()}
+render();
+</script></body></html>
